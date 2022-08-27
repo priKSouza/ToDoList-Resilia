@@ -1,43 +1,111 @@
-import React from "react";
 import { useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
 
-function ToDoList({ onAddTask }) {
-  const [title, setTitle] = useState("");
+const ToDoList = () => {
+  const [list, setList] = useState([]);
+  const [newTask, setNewTask] = useState("");
+  const [newDescription, setNewDescription] = useState("");
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    onAddTask(title);
-    setTitle("");
+  function handleCreateNewTask() {
+    const task = {
+      id: Math.random(),
+      title: newTask,
+      description: newDescription,
+      isComplet: false,
+    };
+
+    if (task.title === "" && task.description === "") {
+      return;
+    }
+
+    setList([...list, task]);
+    setNewTask("");
   }
 
-  function onChangeTitle(e) {
-    setTitle(e.target.value);
+  function handleRemoveTask(id) {
+    const tasksFiltered = list.filter((task) => task.id !== id);
+    setList(tasksFiltered);
+  }
+
+  function handleToggleTaskCompletion(id) {
+    const newTasks = list.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            isComplete: !task.isComplete,
+          }
+        : task
+    );
+    setList(newTasks);
   }
 
   return (
     <>
-      <form className="list">
-        <div className="header">
-          <h1 className="todo">ToDo List</h1>
-        </div>
-        <div className="form">
-          <div className="tarefa">
-            <h2 className="tarefa-title">NOVA TAREFA</h2>
-          </div>
-          <div className="titulo">
+      <div className="header">
+        <h1 className="todo">ToDo list</h1>
+      </div>
+      <section className="list">
+        <header>
+          <h2 className="tarefa-title">NOVA TAREFA</h2>
+          <div className="input-container">
             <p>Título</p>
-            <input type="text" onChange={() => onChangeTitle} />
-          </div>
-          <div className="descricao">
+            <input
+              type="text"
+              placeholder="Adicionar nova tarefa"
+              onChange={(e) => {
+                setNewTask(e.target.value);
+              }}
+              value={newTask}
+            />
             <p>Descrição</p>
-            <textarea onChange={() => onChangeTitle} />
+            <textarea
+              onChange={(e) => {
+                setNewDescription(e.target.value);
+              }}
+              value={newDescription}
+            />
+            <button
+              type="submit"
+              className="add-task"
+              onClick={handleCreateNewTask}
+            >
+              ADICIONAR TAREFA
+            </button>
           </div>
-          <button onClick={() => handleSubmit}>ADICIONAR TAREFA</button>
-          {console.log(handleSubmit)}
+        </header>
+      </section>
+      <main>
+        <div className="tarefas">
+          <h2 className="tarefas-title">TAREFAS</h2>
         </div>
-      </form>
+        <ul>
+          {list.map((task) => (
+            <li key={task.id}>
+              <div className={task.isComplete ? "completed" : ""}>
+                <label className="checkbox-container">
+                  <input
+                    type="checkbox"
+                    checked={task.isComplete}
+                    onClick={() => handleToggleTaskCompletion(task.id)}
+                    readOnly
+                  />
+                  <span className="checkmark"></span>
+                </label>
+                <p>{task.title}</p>
+              </div>
+              <button
+                className="remove-task"
+                type="button"
+                onClick={() => handleRemoveTask(task.id)}
+              >
+                <FiTrash2 size={12} />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </main>
     </>
   );
-}
+};
 
 export default ToDoList;
