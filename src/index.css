@@ -114,7 +114,7 @@ ul {
 }
 
 li {
-  display: flex;;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 10px;
@@ -129,7 +129,7 @@ section ul li div {
 ul li div p {
   font-weight: 700;
   font-size: 12px;
-  color: #000000;;
+  color: #000000;
 }
 
 .completed p {
@@ -139,12 +139,12 @@ ul li div p {
   opacity: 0.6;
 }
 
-label{
+label {
   display: flex;
   align-items: center;
 }
 
-.check{
+.check {
   width: 15px;
 }
 
@@ -163,4 +163,68 @@ label{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Resposividade */
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .list {
+    width: auto;
+    height: 55vh;
+  }
+
+  .tarefas {
+    width: 70vw;
+    margin-top: 30px;
+  }
+
+  .descricao {
+    word-break: break-all;
+  }
+
+  .check {
+    margin: 0;
+  }
+
+  .remove-task {
+    height: 20px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .list {
+    width: auto;
+    height: 55vh;
+  }
+
+  .tarefas {
+    width: auto;
+    margin-top: 30px;
+  }
+
+  .descricao {
+    word-break: break-all;
+  }
+
+  .remove-task {
+    height: 20px;
+  }
+}
+
+@media (min-width: 1001px) {
+  .list {
+    width: 25vw;
+  }
+
+  .descricao {
+    word-break: break-all;
+  }
 }

@@ -15,8 +15,8 @@ const ToDoList = () => {
       isComplet: false,
     };
 
-    if (task.title === "" && task.description === "") {
-      return;
+    if (task.title === "" || task.description === "") {
+      return alert("Preencha os dois campos para concluir!");
     }
 
     setList([...list, task]);
@@ -92,7 +92,7 @@ const ToDoList = () => {
                       />
                     </label>
                     <p>TÍTULO: {task.title}</p>
-                    <p>DESCRIÇÃO: {task.description}</p>
+                    <p className="descricao">DESCRIÇÃO: {task.description}</p>
                     <button
                       className="remove-task"
                       type="button"
